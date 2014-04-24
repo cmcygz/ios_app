@@ -120,6 +120,9 @@
 		BEE14DE918EB44CD0093678D /* uhistory.png in Resources */ = {isa = PBXBuildFile; fileRef = BEE14DCD18EB44CD0093678D /* uhistory.png */; };
 		BEE62C1E1906B57900307369 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE62C1D1906B57900307369 /* HistoryCell.m */; };
 		BEE62C211906B5C900307369 /* HistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE62C201906B5C900307369 /* HistoryCell.xib */; };
+		BEEA74BA1909C62B00FE8762 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEA74B71909C62B00FE8762 /* Default-568h@2x.png */; };
+		BEEA74BC1909C62B00FE8762 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEA74B91909C62B00FE8762 /* Default@2x.png */; };
+		BEEA74C01909C81800FE8762 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BEEA74BF1909C81800FE8762 /* Default.png */; };
 		BEF325A818FDB8BA00307677 /* MLTableAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF325A718FDB8BA00307677 /* MLTableAlert.m */; };
 		BEF325AA18FDC67C00307677 /* AlertButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF325A918FDC67C00307677 /* AlertButton.png */; };
 		BEF84BAE18EB621100A8F958 /* ImgBg.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF84BAD18EB621100A8F958 /* ImgBg.png */; };
@@ -278,6 +281,9 @@
 		BEE62C1C1906B57900307369 /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
 		BEE62C1D1906B57900307369 /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
 		BEE62C201906B5C900307369 /* HistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryCell.xib; sourceTree = "<group>"; };
+		BEEA74B71909C62B00FE8762 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BEEA74B91909C62B00FE8762 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		BEEA74BF1909C81800FE8762 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		BEF325A618FDB8BA00307677 /* MLTableAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLTableAlert.h; sourceTree = "<group>"; };
 		BEF325A718FDB8BA00307677 /* MLTableAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLTableAlert.m; sourceTree = "<group>"; };
 		BEF325A918FDC67C00307677 /* AlertButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AlertButton.png; path = ../../../Desktop/AlertButton.png; sourceTree = "<group>"; };
@@ -636,6 +642,9 @@
 		BEE14DB118EB44830093678D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BEEA74BF1909C81800FE8762 /* Default.png */,
+				BEEA74B71909C62B00FE8762 /* Default-568h@2x.png */,
+				BEEA74B91909C62B00FE8762 /* Default@2x.png */,
 				BEBD343118F0ADB70070D45B /* Favourites.png */,
 				BEF325A918FDC67C00307677 /* AlertButton.png */,
 				BEBD343518F0AE180070D45B /* Logos.png */,
@@ -818,6 +827,7 @@
 				BEE14DDB18EB44CD0093678D /* contact.png in Resources */,
 				BE98F51518EB4D270084AF7F /* OrderPage.xib in Resources */,
 				BEBF46B919070BA400F276A8 /* RunningOrder.xib in Resources */,
+				BEEA74C01909C81800FE8762 /* Default.png in Resources */,
 				BEBD343418F0ADFE0070D45B /* ContactMe.png in Resources */,
 				BEE14DD918EB44CD0093678D /* click_here_button.png in Resources */,
 				BE98F52018EB4DFD0084AF7F /* MyOrder.xib in Resources */,
@@ -841,6 +851,7 @@
 				BEE14DDF18EB44CD0093678D /* exit.png in Resources */,
 				BE51D7861905F0F1004ED276 /* my_favourite.png in Resources */,
 				BE51D7841905E1EF004ED276 /* foregroundStar@2x.png in Resources */,
+				BEEA74BC1909C62B00FE8762 /* Default@2x.png in Resources */,
 				BE76E65618ECC5070064D6E2 /* ItemList.xib in Resources */,
 				BEF84BAE18EB621100A8F958 /* ImgBg.png in Resources */,
 				BEE14DD218EB44CD0093678D /* add_to_order.png in Resources */,
@@ -880,6 +891,7 @@
 				BEBD343618F0AE180070D45B /* Logos.png in Resources */,
 				BEE14DD518EB44CD0093678D /* back.png in Resources */,
 				BEF325AA18FDC67C00307677 /* AlertButton.png in Resources */,
+				BEEA74BA1909C62B00FE8762 /* Default-568h@2x.png in Resources */,
 				BEE14DD418EB44CD0093678D /* back_btn.png in Resources */,
 				BEE14DDA18EB44CD0093678D /* confirm_order.png in Resources */,
 				BEE14D8E18EB438E0093678D /* Images.xcassets in Resources */,
@@ -1051,7 +1063,6 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/malikimran/Documents/Rest,
 					"$(inherited)",
@@ -1070,7 +1081,6 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/malikimran/Documents/Rest,
 					"$(inherited)",

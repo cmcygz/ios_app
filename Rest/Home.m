@@ -36,7 +36,11 @@ NSTimer *timer;
     }
     return context;
 }
-
+//- (void) loadView
+//{
+//    [super loadView];
+//    self.view.frame = [UIScreen mainScreen].bounds;
+//}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
