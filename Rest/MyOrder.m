@@ -293,6 +293,7 @@ int count = 0;
 }
 - (IBAction)buttonPressed:(UIButton *)sender
 {
+    NSLog(@"Sender = %@", sender);
     Home *go1 = [[Home alloc] initWithNibName:@"Home" bundle:nil];
     [self presentViewController:go1 animated:YES completion:nil];
 }
