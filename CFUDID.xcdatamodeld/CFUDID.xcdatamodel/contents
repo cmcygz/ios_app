@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Favourite" syncable="YES">
+        <attribute name="dishid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PendingOrder" syncable="YES">
+        <attribute name="dishid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RunningOrder" syncable="YES">
+        <attribute name="dishid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="UDID" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="PendingOrder" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="RunningOrder" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UDID" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Favourite" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>
