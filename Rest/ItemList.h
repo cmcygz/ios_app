@@ -16,7 +16,7 @@
     NSMutableString *proIDs;
     NSMutableString *time;
     
-    NSArray *allItems;
+    NSMutableArray *allItems;
     NSMutableArray *displayItems;
 }
 @property (nonatomic, weak) IBOutlet UIButton *back;

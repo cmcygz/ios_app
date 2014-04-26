@@ -49,11 +49,9 @@
     
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    // Do any additional setup after loading the view from its nib.
     allItems = [[NSMutableArray alloc] init];
     displayItems = [[NSMutableArray alloc] init];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+ 
     
     
     NSString *str=@"http://localhost/food/hot_dish.php";
@@ -61,12 +59,8 @@
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;
     NSMutableDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:myNSData options: NSJSONReadingMutableContainers error:NULL];
-
     allItems = responseDictionary;
     displayItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
-
-    //NSLog(@"%@",allItems);
-    
    }
 
 - (void)keyboardShown:(NSNotification *)note{
@@ -163,22 +157,16 @@
         NSLog(@"The quantity is %@",title);
         //s
         NSLog(@"Dish ID = %@", proIDs);
-        //NSString *dishId = [[allItems objectAtIndex:buttonIndex] objectForKey:@"id"];
         NSManagedObjectContext *context = [self managedObjectContext];
         NSError *error=nil;
-       // Create a new device
             NSManagedObject *newDevice = [NSEntityDescription insertNewObjectForEntityForName:@"PendingOrder" inManagedObjectContext:context];
             [newDevice setValue:proIDs forKey:@"dishid"];
             [newDevice setValue:title forKey:@"quantity"];
             [newDevice setValue:time forKey:@"time"];
-       // Save the object to persistent store
         if (![context save:&error]) {
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
-        //e
     }
-    
-    //NSLog(@"Using the Textfield: %@",[[alertView textFieldAtIndex:0] text]);
 }
 
 

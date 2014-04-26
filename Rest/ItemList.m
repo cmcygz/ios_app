@@ -45,12 +45,8 @@
     [self setNeedsStatusBarAppearanceUpdate];
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    // Do any additional setup after loading the view from its nib.
-    //allItems = [[NSArray alloc] init];
-    //displayItems = [[NSMutableArray alloc] init];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
-    
+    allItems = [[NSMutableArray alloc] init];
+    displayItems = [[NSMutableArray alloc] init];
     
     NSString *str=@"http://localhost/food/plist.php?name=";
     str = [str stringByAppendingString:title];
@@ -59,9 +55,9 @@
     NSURL *url=[NSURL URLWithString:urlTextEscaped];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;
-    allItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
-    //NSLog(@"%@",allItems);
-    
+    NSMutableDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:myNSData options: NSJSONReadingMutableContainers error:NULL];
+    allItems = responseDictionary;
+    displayItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
 }
 
 - (void)keyboardShown:(NSNotification *)note{
@@ -108,10 +104,6 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ItemListCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
-    //cell.lableTitle.text = [displayItems objectAtIndex:indexPath.row];
-    // cell.lablePrice.text = [displayItems objectAtIndex:indexPath.row];
-    // cell.ImageHotDish.image = [UIImage imageNamed:@"about.png"];
     
     NSString *picName = @"file:///Users/malikimran/Desktop/Resturant/RestAutomationAdmin/uploads/dish/";
     picName = [picName stringByAppendingString:[[allItems objectAtIndex:indexPath.row] objectForKey:@"picture"]];
@@ -173,10 +165,7 @@
         if (![context save:&error]) {
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
-        //e
     }
-    
-    //NSLog(@"Using the Textfield: %@",[[alertView textFieldAtIndex:0] text]);
 }
 
 
@@ -184,7 +173,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     OrderPage *go1 = [[OrderPage alloc] initWithNibName:@"OrderPage" bundle:nil];
-    //[self presentModalViewController:go1 animated:YES];
     go1.temp = [[allItems objectAtIndex:indexPath.row] objectForKey:@"id"];
     [self presentViewController:go1 animated:YES completion:nil];
 }
@@ -192,22 +180,31 @@
 {
     [searchBar resignFirstResponder];
 }
+
 - (void)searchBar:(UISearchBar *)asearchBar textDidChange:(NSString *)searchText{
     if ([searchText length] == 0) {
-        [displayItems removeAllObjects];
-        [displayItems addObjectsFromArray:allItems];
+        [allItems removeAllObjects];
+        [allItems addObjectsFromArray:displayItems];
         [searchBar performSelector: @selector(resignFirstResponder)
                         withObject: nil
                         afterDelay: 0.1];
     }
     else{
-        [displayItems removeAllObjects];
-        for (NSString *string in allItems) {
+        if([allItems count] >= 1){
+            [allItems removeAllObjects];
+        }
+        //[allItems removeAllObjects];
+        NSString *string;
+        int i=0;
+        for (string in displayItems) {
+            
+            string = [string valueForKey:@"NAME"];
             NSRange r = [string rangeOfString:searchText options:NSCaseInsensitiveSearch];
             
             if (r.location != NSNotFound) {
-                [displayItems addObject:string];
+                [allItems addObject:[displayItems objectAtIndex:i]];
             }
+            i = i+1;
         }
     }
     [tableView reloadData];
