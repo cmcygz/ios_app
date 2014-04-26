@@ -24,6 +24,7 @@
 @implementation HotDishes
 @synthesize back;
 @synthesize home;
+
 - (NSManagedObjectContext *)managedObjectContext {
     NSManagedObjectContext *context = nil;
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -45,10 +46,11 @@
 {
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
+    
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     // Do any additional setup after loading the view from its nib.
-    allItems = [[NSArray alloc] init];
+    allItems = [[NSMutableArray alloc] init];
     displayItems = [[NSMutableArray alloc] init];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
@@ -58,7 +60,11 @@
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;
-    allItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
+    NSMutableDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:myNSData options: NSJSONReadingMutableContainers error:NULL];
+
+    allItems = responseDictionary;
+    displayItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
+
     //NSLog(@"%@",allItems);
     
    }
@@ -92,7 +98,7 @@
 }
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0f;
+    return 80.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [allItems count];;
@@ -188,20 +194,28 @@
 }
 - (void)searchBar:(UISearchBar *)asearchBar textDidChange:(NSString *)searchText{
     if ([searchText length] == 0) {
-        [displayItems removeAllObjects];
-        [displayItems addObjectsFromArray:allItems];
+        [allItems removeAllObjects];
+        [allItems addObjectsFromArray:displayItems];
         [searchBar performSelector: @selector(resignFirstResponder)
                         withObject: nil
                         afterDelay: 0.1];
     }
     else{
-        [displayItems removeAllObjects];
-        for (NSString *string in allItems) {
+        if([allItems count] >= 1){
+            [allItems removeAllObjects];
+        }
+        //[allItems removeAllObjects];
+        NSString *string;
+        int i=0;
+        for (string in displayItems) {
+            
+            string = [string valueForKey:@"NAME"];
             NSRange r = [string rangeOfString:searchText options:NSCaseInsensitiveSearch];
             
             if (r.location != NSNotFound) {
-                [displayItems addObject:string];
+                [allItems addObject:[displayItems objectAtIndex:i]];
             }
+            i = i+1;
         }
     }
     [tableView reloadData];

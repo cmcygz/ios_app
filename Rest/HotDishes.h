@@ -15,10 +15,9 @@
     IBOutlet UISearchBar *searchBar;
     NSMutableString *proIDs;
     NSMutableString *time;
-    NSArray *allItems;
+    NSMutableArray *allItems;
     NSMutableArray *displayItems;
 }
 @property (nonatomic, weak) IBOutlet UIButton *back;
 @property (weak, nonatomic) IBOutlet UIButton *home;
-
 @end
