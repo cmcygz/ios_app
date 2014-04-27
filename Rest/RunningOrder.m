@@ -96,7 +96,7 @@ NSInteger *ind = 0;
 }
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0f;
+    return 80.0f;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -153,12 +153,12 @@ NSInteger *ind = 0;
     cell.lableTitle.text = [[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"];
     cell.lablePrice.text = [[order_id objectAtIndex:indexPath.row] objectForKey:@"quantity"];
     //dish_img
-    NSString *get_ordr_ids=[NSString stringWithFormat:@"http://localhost/food/get_dish_img.php?dish_id=%@",[[order_id objectAtIndex:indexPath.row] objectForKey:@"id"]];
+    NSString *get_ordr_ids=[NSString stringWithFormat:@"http://localhost/food/get_dish_img.php?dish_id=%@",[[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"]];
     NSURL *get_datas=[NSURL URLWithString:get_ordr_ids];
-    NSData *fetch_datas=[NSData dataWithContentsOfURL:get_datas];
-    dish_img = [NSJSONSerialization JSONObjectWithData:fetch_datas options:kNilOptions error:&error];
+    NSData *fetch_cmpltData=[NSData dataWithContentsOfURL:get_datas];
+    dish_img = [NSJSONSerialization JSONObjectWithData:fetch_cmpltData options:kNilOptions error:&error];
     
-    NSString *img = [[dish_img objectAtIndex:0] objectForKey:@"dish_id"];
+    NSString *img = [[dish_img objectAtIndex:0] objectForKey:@"picture"];
     
     NSString *picName = [NSString stringWithFormat:@"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/%@",img ];
     //picName = [picName stringByAppendingString:[[dish_img objectAtIndex:0] objectForKey:@"picture"]];
@@ -166,7 +166,7 @@ NSInteger *ind = 0;
                       placeholderImage:[UIImage imageNamed:nil]];
 
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
     
 }

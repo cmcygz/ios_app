@@ -123,18 +123,16 @@ int count = 0;
 -(UIView *)tableView:(UITableView *)atableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, atableView.frame.size.width, 18)];
-    /* Create custom view to display section header... */
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, atableView.frame.size.width, 12)];
     [label setFont:[UIFont boldSystemFontOfSize:12]];
     label.textAlignment = NSTextAlignmentCenter;
     NSString *string = @"Total Order : $ ";
     NSString * totalVal = [NSString stringWithFormat:@"%d",total];
     string = [string stringByAppendingString:totalVal];
-    /* Section header is in 0th index... */
     [label setText:string];
     label.textColor = [UIColor whiteColor];
     [view addSubview:label];
-    [view setBackgroundColor:[UIColor colorWithRed:0.502 green:0.702 blue:0.114 alpha:1]]; //your background color...
+    [view setBackgroundColor:[UIColor colorWithRed:0.502 green:0.702 blue:0.114 alpha:1]];
     return view;
 }
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -174,16 +172,8 @@ int count = 0;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     NSLog(@"Fetch Object %@", [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"]);
     NSMutableString *prodId = [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"];
-
-//    for (NSManagedObject *info in fetchedObjects) {
-//        NSLog(@"Dish ID : %@", [info valueForKey:@"dishid"]);
-//        NSLog(@"Dish Quantity : %@", [info valueForKey:@"quantity"]);
-//        NSString *cid = [info valueForKey:@"dishid"];
-//        //NSString *alertString = [NSString stringWithFormat:@"Home Many Plate #%ld", (long)[indexPath row]];
-//        //s
-//        NSString *proID = [info valueForKey:@"dishid"];
     
-        NSString *str=@"http://localhost/food/all_dishes.php?id=";
+    NSString *str=@"http://localhost/food/all_dishes.php?id=";
         str = [str stringByAppendingString:prodId];
         NSURL *url=[NSURL URLWithString:str];
         NSData *myNSData=[NSData dataWithContentsOfURL:url];
@@ -288,8 +278,7 @@ int count = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     MyOrder *go1 = [[MyOrder alloc] initWithNibName:@"MyOrder" bundle:nil];
-    //[self presentModalViewController:go1 animated:YES];
-    [self presentViewController:go1 animated:YES completion:nil];
+    //[self presentViewController:go1 animated:YES completion:nil];
 }
 - (IBAction)buttonPressed:(UIButton *)sender
 {
