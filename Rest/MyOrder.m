@@ -221,11 +221,6 @@ int count = 0;
     }
 }
 
-- (void)checkButtonTapped:(id)sender event:(id)event
-{
-    
-   
-}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
  
     if (buttonIndex == 1) {

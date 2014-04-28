@@ -187,7 +187,7 @@ NSTimer *timer;
 
         
 #pragma Select Table Alert Box
-        _alert = [MLTableAlert tableAlertWithTitle:@"Select Your Table" cancelButtonTitle:nil numberOfRows:^NSInteger (NSInteger section)
+        _alert = [MLTableAlert tableAlertWithTitle:@"Select Your Table" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
                   {
                       
                       return 6;

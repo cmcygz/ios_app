@@ -118,7 +118,7 @@
         cell = [nib objectAtIndex:0];
     }
     
-    //Fetch Dish Id from core data
+#pragma   Fetch Dish Id from core data
     
     
     if ([selectedSegment selectedSegmentIndex] == 0) {
@@ -131,8 +131,8 @@
         NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
         NSLog(@"Fetch Object %@", [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"]);
         NSMutableString *prodId = [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"];
-    str=@"http://localhost/food/all_dishes.php?id=";
-    str = [str stringByAppendingString:prodId];
+        str=@"http://localhost/food/all_dishes.php?id=";
+        str = [str stringByAppendingString:prodId];
         url=[NSURL URLWithString:str];
         myNSData=[NSData dataWithContentsOfURL:url];
         
@@ -148,10 +148,6 @@
         
         cell.lableTitle.text = [[allItemss objectAtIndex:0] objectForKey:@"NAME"];
         cell.lablePrice.text = [[allItemss objectAtIndex:0] objectForKey:@"price"];
-        
-        NSString *a = [[allItemss objectAtIndex:0] objectForKey:@"price"];
-        //    NSInteger b = [a integerValue];
-        //    NSString *v = [[allItemss objectAtIndex:0] objectForKey:@"id"];
         
         [cell.buttonAdd addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -176,8 +172,6 @@
             cell.lablePrice.text = [[allItemss objectAtIndex:indexPath.row] objectForKey:@"price"];
             
             NSString *a = [[allItemss objectAtIndex:indexPath.row] objectForKey:@"price"];
-            //    NSInteger b = [a integerValue];
-            //    NSString *v = [[allItemss objectAtIndex:0] objectForKey:@"id"];
             
             [cell.buttonAdd addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -189,6 +183,45 @@
 
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    OrderPage *go1 = [[OrderPage alloc] initWithNibName:@"OrderPage" bundle:nil];
+    go1.temp = [[allItemss objectAtIndex:0] objectForKey:@"id"];
+    [self presentViewController:go1 animated:YES completion:nil];
+}
+
+#pragma Delete Item From Favourite
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView beginUpdates];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Do whatever data deletion you need to do...
+        // Delete the row from the data source
+        NSLog(@"Row Index is = %@", [collectIds objectAtIndex:indexPath.row]);
+        NSString *alertString = [NSString stringWithFormat:@"Are You Sure To Remove Item # : %@ ",[collectIds objectAtIndex:indexPath.row]];
+        proIDs =[collectIds objectAtIndex:indexPath.row];
+        NSManagedObjectContext *context = [self managedObjectContext];
+        NSError *error=nil;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription
+                                       entityForName:@"Favourite" inManagedObjectContext:context];
+        [fetchRequest setEntity:entity];
+        NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+        
+        for (NSManagedObject *info in fetchedObjects) {
+            NSLog(@"Here Dish ID = %@",[info valueForKey:@"dishid"]);
+            NSLog(@"Here delete dish ID = %@", proIDs);
+            NSString *id1 = [info valueForKey:@"dishid"];
+            NSString *id2 = proIDs;
+            if ([id1 isEqualToString:id2]) {
+                [context deleteObject:info];
+            }
+        }
+    }
+    Favourit *go1 = [[Favourit alloc] initWithNibName:@"Favourit" bundle:nil];
+    [self presentViewController:go1 animated:NO completion:nil];
+}
 
 - (void)checkButtonTapped:(id)sender event:(id)event
 {
@@ -222,7 +255,6 @@
         NSLog(@"The quantity is %@",title);
         //s
         NSLog(@"Dish ID = %@", proIDs);
-        //NSString *dishId = [[allItems objectAtIndex:buttonIndex] objectForKey:@"id"];
         NSManagedObjectContext *context = [self managedObjectContext];
         NSError *error=nil;
         // Create a new device
@@ -234,20 +266,11 @@
         if (![context save:&error]) {
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
-        //e
     }
-    
-    //NSLog(@"Using the Textfield: %@",[[alertView textFieldAtIndex:0] text]);
 }
 
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    OrderPage *go1 = [[OrderPage alloc] initWithNibName:@"OrderPage" bundle:nil];
-    //[self presentModalViewController:go1 animated:YES];
-    [self presentViewController:go1 animated:YES completion:nil];
-}
 
 - (void)didReceiveMemoryWarning
 {

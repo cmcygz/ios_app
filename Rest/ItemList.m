@@ -6,6 +6,7 @@
 #import "ItemListCell.h"
 #import "OrderPage.h"
 #import "MyOrder.h"
+#import "MenuList.h"
 #import "MainViewController.h"
 #import "HGKOptionPanel.h"
 #import "jsonViewController.h"
@@ -130,7 +131,7 @@
     time =[[allItems objectAtIndex:indexPath.row] objectForKey:@"average_cooking_time_min"];
     if (indexPath != nil)
     {
-        NSString *alertString = [NSString stringWithFormat:@"Home Many Plate Of : %@ ",[[allItems objectAtIndex:indexPath.row] objectForKey:@"id"]];
+        NSString *alertString = [NSString stringWithFormat:@"Home Many Plate Of : %@ ",[[allItems objectAtIndex:indexPath.row] objectForKey:@"NAME"]];
         UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"QUANTITY"
                                                        message:alertString
                                                       delegate:self
@@ -220,7 +221,7 @@
 }
 - (IBAction)buttonPressed:(UIButton *)sender
 {
-    Home *go1 = [[Home alloc] initWithNibName:@"Home" bundle:nil];
+    MenuList *go1 = [[MenuList alloc] initWithNibName:@"MenuList" bundle:nil];
     [self presentViewController:go1 animated:YES completion:nil];
 }
 

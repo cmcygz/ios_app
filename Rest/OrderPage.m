@@ -8,15 +8,17 @@
 
 #import "OrderPage.h"
 #import "Home.h"
+#import "CSNotificationView.h"
 @interface OrderPage ()
 @property (strong) NSMutableArray *UDID;
-
+@property (nonatomic, strong) CSNotificationView* permanentNotification;
 @end
 
 @implementation OrderPage
 @synthesize back;
 @synthesize home;
 @synthesize device;
+
 - (NSManagedObjectContext *)managedObjectContext {
     NSManagedObjectContext *context = nil;
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -123,6 +125,13 @@
     if (![context save:&error]) {
         NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
     }
+    [CSNotificationView showInViewController:self
+                                   tintColor:[UIColor greenColor]
+                                       image:[UIImage imageNamed:@"sucess"]
+                                     message:@"Dish Added Sucessfully."
+                                    duration:3.8f];
+    
+    [self.permanentNotification setShowingActivity:YES];
 }
 
 
