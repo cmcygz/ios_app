@@ -118,20 +118,51 @@
 }
 
 - (IBAction)buttonAddToFavourite:(id)sender {
+    int count = 0;
+   
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error=nil;
     NSManagedObject *addToFav = [NSEntityDescription insertNewObjectForEntityForName:@"Favourite" inManagedObjectContext:context];
-    [addToFav setValue:[results objectForKey:@"id"] forKey:@"dishid"];
+    NSString *dish = [results objectForKey:@"id"];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Favourite" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    for (NSManagedObject *info in fetchedObjects) {
+        NSString *id1 = [info valueForKey:@"dishid"];
+        
+        if ([id1 isEqualToString:dish]) {
+            count = count +1;
+        }
+    }
+    if (count == 0) {
+        [addToFav setValue:[results objectForKey:@"id"] forKey:@"dishid"];
+        [CSNotificationView showInViewController:self
+                                       tintColor:[UIColor greenColor]
+                                           image:[UIImage imageNamed:@"sucess"]
+                                         message:@"Dish Added Sucessfully."
+                                        duration:3.8f];
+        
+        [self.permanentNotification setShowingActivity:YES];
+
+    }
+    else if (count > 0){
+        [CSNotificationView showInViewController:self
+                                       tintColor:[UIColor greenColor]
+                                           image:[UIImage imageNamed:@"sucess"]
+                                         message:@"Dish Already Added."
+                                        duration:3.8f];
+        
+        [self.permanentNotification setShowingActivity:YES];
+
+           }
+    
     if (![context save:&error]) {
         NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
     }
-    [CSNotificationView showInViewController:self
-                                   tintColor:[UIColor greenColor]
-                                       image:[UIImage imageNamed:@"sucess"]
-                                     message:@"Dish Added Sucessfully."
-                                    duration:3.8f];
     
-    [self.permanentNotification setShowingActivity:YES];
 }
 
 
