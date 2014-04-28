@@ -134,7 +134,7 @@
     time =[[allItems objectAtIndex:indexPath.row] objectForKey:@"average_cooking_time_min"];
     if (indexPath != nil)
     {
-        NSString *alertString = [NSString stringWithFormat:@"Home Many Plate Of : %@ ",[[allItems objectAtIndex:indexPath.row] objectForKey:@"id"]];
+        NSString *alertString = [NSString stringWithFormat:@"Home Many Plate Of : %@ ",[[allItems objectAtIndex:indexPath.row] objectForKey:@"NAME"]];
         UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"QUANTITY"
                                                        message:alertString
                                                       delegate:self

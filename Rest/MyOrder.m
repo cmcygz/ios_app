@@ -195,11 +195,10 @@ int count = 0;
     [collectIds addObject:v];
     count++;
     [cell.buttonSubtractOrder addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
-//s
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -209,22 +208,18 @@ int count = 0;
         // Do whatever data deletion you need to do...
         // Delete the row from the data source
        NSLog(@"Row Index is = %@", [collectIds objectAtIndex:indexPath.row]);
-        NSString *alertString = [NSString stringWithFormat:@"Are You Sure : %@ ",[collectIds objectAtIndex:indexPath.row]];
-        UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"QUANTITY"
+        NSString *alertString = [NSString stringWithFormat:@"Are You Sure To Remove Item # : %@ ",[collectIds objectAtIndex:indexPath.row]];
+        UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Remove ITEM !"
                                                        message:alertString
                                                       delegate:nil
                                              cancelButtonTitle:@"No"
                                              otherButtonTitles:@"Yes",
                              nil];
         alert.delegate = self;
-        //alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
         proIDs =[collectIds objectAtIndex:indexPath.row];
     }
 }
-//e
-
-
 
 - (void)checkButtonTapped:(id)sender event:(id)event
 {
@@ -233,10 +228,7 @@ int count = 0;
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
  
-    //NSLog(@"Using the Textfield: %@",[[alertView textFieldAtIndex:0] text]);
-    
     if (buttonIndex == 1) {
-    //s
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error=nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -263,14 +255,9 @@ int count = 0;
     }
     if (![context save:&error]) {
         NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-    }
-    
-    
-
-    //e
+        }
     }
     MyOrder *go1 = [[MyOrder alloc] initWithNibName:@"MyOrder" bundle:nil];
-    //[self presentModalViewController:go1 animated:YES];
     [self presentViewController:go1 animated:NO completion:nil];
 }
 
@@ -305,7 +292,6 @@ int count = 0;
         NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
     }
     MyOrder *go1 = [[MyOrder alloc] initWithNibName:@"MyOrder" bundle:nil];
-    //[self presentModalViewController:go1 animated:YES];
     [self presentViewController:go1 animated:NO completion:nil];
     total = 0;
 
@@ -314,9 +300,18 @@ int count = 0;
 #pragma mark Confirm Order
 - (IBAction)confirmOrder:(UIButton *)sender
 {
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error=nil;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"PendingOrder" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 
+
+    if ([fetchedObjects count] > 0) {
 #pragma Select Table Alert Box
-    _alert = [MLTableAlert tableAlertWithTitle:@"Select Your Table" cancelButtonTitle:nil numberOfRows:^NSInteger (NSInteger section)
+    _alert = [MLTableAlert tableAlertWithTitle:@"Select Your Table" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
                   {
                       
                       return 6;
@@ -346,7 +341,6 @@ int count = 0;
         NSURL *url=[NSURL URLWithString:urlTextEscaped];
         NSData *myNSData=[NSData dataWithContentsOfURL:url];
         
-        //start
         NSManagedObjectContext *context = [self managedObjectContext];
         NSError *error=nil;
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -355,8 +349,6 @@ int count = 0;
         [fetchRequest setEntity:entity];
         NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
         
-        
-        //e
         if (![selectedTable isEqualToString:NULL]) {
             
             for (NSManagedObject *info in fetchedObjects) {
@@ -370,7 +362,7 @@ int count = 0;
                 
                 NSLog(@"Getting ID From pending Order = %@",[info valueForKey:@"dishid"]);
 #pragma Get Order ID from Order_Main
-                //s
+                
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 NSString *ordrMain=@"http://localhost/food/get_order_id.php?id=";
                 ordrMain = [ordrMain stringByAppendingString:appDelegate.passUdid];
@@ -390,24 +382,27 @@ int count = 0;
                 
             }
             MyOrder *go1 = [[MyOrder alloc] initWithNibName:@"MyOrder" bundle:nil];
-            //[self presentModalViewController:go1 animated:YES];
             [self presentViewController:go1 animated:NO completion:nil];
             if (![context save:&error]) {
                 NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
             }
         }
-        //end
-        
     } andCompletionBlock:^{
 		NSLog(@"Cancel Button Pressed\nNo Cells Selected");
 	}];
     _alert.height = 260;
     [_alert show];
-    //e
-    
-    
-    
     total = 0;
+    }
+    else if ([fetchedObjects count] == 0){
+        UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Empty !"
+                                                       message:@"Empty Order Cannot Processed"
+                                                      delegate:self
+                                             cancelButtonTitle:@"ok"
+                                             otherButtonTitles:nil];
+        alert.delegate = self;
+        [alert show];
+    }
     
 }
 
