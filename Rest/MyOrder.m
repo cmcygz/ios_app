@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "RunningOrder.h"
 #import "OrderHistory.h"
+#import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 @implementation MyOrder
 
@@ -34,7 +35,7 @@
     }
     return context;
 }
-//int total = 0;
+int total = 0;
 int count = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -182,15 +183,40 @@ int count = 0;
    
             NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
             picName = [picName stringByAppendingString:[[allItemss objectAtIndex:0] objectForKey:@"picture"]];
-            [cell.ImageOrderMenu setImageWithURL:[NSURL URLWithString:picName]
+    cell.ImageOrderMenu.layer.cornerRadius = 0.0;
+    cell.ImageOrderMenu.layer.masksToBounds = YES;
+    [cell.ImageOrderMenu setImageWithURL:[NSURL URLWithString:picName]
                                 placeholderImage:[UIImage imageNamed:nil]];
             
             cell.LableOrderMenu.text = [[allItemss objectAtIndex:0] objectForKey:@"NAME"];
             cell.lablePriceOrderMenu.text = [[allItemss objectAtIndex:0] objectForKey:@"price"];
+    //quantity
+    //s
     
-    NSString *a = [[allItemss objectAtIndex:0] objectForKey:@"price"];
-    NSInteger b = [a integerValue];
-    total = total + b;
+    
+    for (NSManagedObject *info in fetchedObjects) {
+        NSLog(@"Here Dish ID = %@",[info valueForKey:@"dishid"]);
+        NSLog(@"Here delete dish ID = %@", proIDs);
+        NSString *id1 = [info valueForKey:@"dishid"];
+        NSString *id2 = prodId;
+        if ([id1 isEqualToString:id2]) {
+            NSString *sub = [info valueForKey:@"quantity"];
+            cell.lableQuantity.text = sub;
+            NSInteger q = [sub integerValue];
+            NSString *a = [[allItemss objectAtIndex:0] objectForKey:@"price"];
+            NSInteger b = [a integerValue];
+            b = b * q;
+            total = total + b;
+        }
+        
+        
+    }
+    if (![context save:&error]) {
+        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+    }
+
+    //e
+    
     NSString *v = [[allItemss objectAtIndex:0] objectForKey:@"id"];
     [collectIds addObject:v];
     count++;
@@ -242,7 +268,7 @@ int count = 0;
             
             NSMutableString *sub = [[allItemss objectAtIndex:0] objectForKey:@"price"];
             NSInteger b = [sub integerValue];
-            total = total - b;
+            //total = total - b;
             [context deleteObject:info];
         }
         

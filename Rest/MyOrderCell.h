@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *LableOrderMenu;
 @property (weak, nonatomic) IBOutlet UILabel *lablePriceOrderMenu;
 @property (weak, nonatomic) IBOutlet UIButton *buttonSubtractOrder;
+@property (strong, nonatomic) IBOutlet UILabel *lableQuantity;
 
 @end

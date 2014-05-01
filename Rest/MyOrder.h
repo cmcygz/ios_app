@@ -16,7 +16,7 @@
 	// UI
 	UILabel *dLabel;
 	UILabel *fLabel;
-    NSInteger *total;
+    //NSInteger *total;
     NSArray *allItems;
     NSArray *allItemss;
     NSMutableString *proIDs;

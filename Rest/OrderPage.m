@@ -9,6 +9,7 @@
 #import "OrderPage.h"
 #import "Home.h"
 #import "CSNotificationView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 @interface OrderPage ()
 @property (strong) NSMutableArray *UDID;
 @property (nonatomic, strong) CSNotificationView* permanentNotification;
@@ -47,7 +48,7 @@
     
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
+    NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
     NSString *str=@"http://localhost/food/singledish.php?id=";
     str = [str stringByAppendingString:pid];
     NSURL *url=[NSURL URLWithString:str];
@@ -55,6 +56,7 @@
     NSError *error=nil;
     allItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
     results = [NSJSONSerialization JSONObjectWithData:myNSData options:NSJSONReadingMutableContainers error:nil];
+    picName = [picName stringByAppendingString:[results objectForKey:@"picture"]];
     _lablePTitle.text = [results objectForKey:@"NAME"];
     _lablePName.text = [results objectForKey:@"NAME"];
     _lablePPrice.text = [results objectForKey:@"price"];
@@ -62,6 +64,13 @@
     _lableCalories.text = [results objectForKey:@"calories_per_100_grams"];
     _lableCookingTime.text = [results objectForKey:@"average_cooking_time_min"];
     _lableDescription.text = [results objectForKey:@"description"];
+    [_imageDish setImageWithURL:[NSURL URLWithString:picName]placeholderImage:[UIImage imageNamed:nil]]; //sdwebimage library
+    
+    //asynchronously download image
+//    NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
+//    picName = [picName stringByAppendingString:[results objectForKey:@"picture"]];
+//    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:picName]];
+//    _imageDish.image = [UIImage imageWithData:imageData];
     
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{

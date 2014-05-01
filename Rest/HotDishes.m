@@ -57,8 +57,12 @@
     NSString *str=@"http://localhost/food/hot_dish.php";
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
+    if (myNSData == nil) {
+        NSLog(@"Its working");
+    }
     NSError *error=nil;
     NSMutableDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:myNSData options: NSJSONReadingMutableContainers error:NULL];
+    
     allItems = responseDictionary;
     displayItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
    }
@@ -113,7 +117,8 @@
     picName = [picName stringByAppendingString:[[allItems objectAtIndex:indexPath.row] objectForKey:@"picture"]];
     [cell.ImageHotDish setImageWithURL:[NSURL URLWithString:picName]
                    placeholderImage:[UIImage imageNamed:nil]];
-    
+//    cell.ImageHotDish.layer.cornerRadius = 0.0;
+//    cell.ImageHotDish.layer.masksToBounds = YES;
     cell.lableTitle.text = [[allItems objectAtIndex:indexPath.row] objectForKey:@"NAME"];
     cell.lablePrice.text = [[allItems objectAtIndex:indexPath.row] objectForKey:@"price"];
     
