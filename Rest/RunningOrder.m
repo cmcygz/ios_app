@@ -154,7 +154,7 @@ NSInteger *ind = 0;
     cell.lableTitle.text = [[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"];
     cell.lablePrice.text = [[order_id objectAtIndex:indexPath.row] objectForKey:@"quantity"];
     //dish_img
-    NSString *get_ordr_ids=[NSString stringWithFormat:@"/food/get_dish_img.php?dish_id=%@",Base_Url,[[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"]];
+    NSString *get_ordr_ids=[NSString stringWithFormat:@"%@/food/get_dish_img.php?dish_id=%@",Base_Url,[[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"]];
     NSURL *get_datas=[NSURL URLWithString:get_ordr_ids];
     NSData *fetch_cmpltData=[NSData dataWithContentsOfURL:get_datas];
     dish_img = [NSJSONSerialization JSONObjectWithData:fetch_cmpltData options:kNilOptions error:&error];

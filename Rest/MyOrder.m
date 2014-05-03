@@ -382,7 +382,7 @@ int count = 0;
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         NSLog(@"Got udid from appdelegate = %@",appDelegate.passUdid);
-        NSString *new_order = [NSString stringWithFormat: @"%@/food/submit_new_order.php?id=NULL&customer_id=%@&table_id=%@&order_datetime=%@&customer_instruction=Normal&estimated_time_min=30-45&actual_time=40&created_on=%@&updated_on=NULL&STATUS=new", Base_Url,appDelegate.passUdid,selectedTable,dateStr,dateStr];
+        NSString *new_order = [NSString stringWithFormat: @"%@/food/submit_new_order.php?id=NULL&customer_id=%@&table_id=%@&order_datetime=%@&customer_instruction=Normal&estimated_time_min=30-45&actual_time=40&created_on=%@&updated_on=NULL&STATUS=new",Base_Url,appDelegate.passUdid,selectedTable,dateStr,dateStr];
         NSString* urlTextEscaped = [new_order stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSURL *url=[NSURL URLWithString:urlTextEscaped];
         NSData *myNSData=[NSData dataWithContentsOfURL:url];
@@ -418,7 +418,7 @@ int count = 0;
                 allItemss = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
                 NSDictionary *results = [NSJSONSerialization JSONObjectWithData:myNSData options:NSJSONReadingMutableContainers error:nil];
                 NSString *get_order_id = [[allItemss objectAtIndex:0] objectForKey:@"id"];
-                NSString *new_order_detail = [NSString stringWithFormat: @"%@/food/order_detail.php?order_id=%@&dish_id=%@&quantity=%@&created_on=%@&updated_on=%@",Base_Url, get_order_id,pDishID,pDishQuantity,dateStr,dateStr];
+                NSString *new_order_detail = [NSString stringWithFormat: @"%@/food/order_detail.php?order_id=%@&dish_id=%@&quantity=%@&created_on=%@&updated_on=%@",Base_Url,get_order_id,pDishID,pDishQuantity,dateStr,dateStr];
                 NSString* urlTextEscaped = [new_order_detail stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 NSURL *url=[NSURL URLWithString:urlTextEscaped];
                 NSData *myNSDatas=[NSData dataWithContentsOfURL:url];
