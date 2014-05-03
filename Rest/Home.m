@@ -218,7 +218,7 @@ NSTimer *timer;
             if (![selectedTable isEqualToString:NULL]) {
                                                        //s
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    NSString *ordrMain=[NSString stringWithFormat:@"http://localhost/food/call_waiter.php?cust_id=%@&table_no=%@&date=%@",appDelegate.passUdid,selectedTable,dateStr];
+                    NSString *ordrMain=[NSString stringWithFormat:@"http://krazyidea.com/food/call_waiter.php?cust_id=%@&table_no=%@&date=%@",appDelegate.passUdid,selectedTable,dateStr];
                 NSString* urlTextEscaped = [ordrMain stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
                     NSURL *urls=[NSURL URLWithString:urlTextEscaped];

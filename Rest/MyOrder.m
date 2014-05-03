@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "RunningOrder.h"
 #import "OrderHistory.h"
+#import "ConnectionUrls.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 @implementation MyOrder
@@ -126,13 +127,24 @@ int count = 0;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, atableView.frame.size.width, 18)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, atableView.frame.size.width, 12)];
     [label setFont:[UIFont boldSystemFontOfSize:12]];
-    label.textAlignment = NSTextAlignmentCenter;
-    NSString *string = @"Total Order : $ ";
+    label.textAlignment = NSTextAlignmentLeft;
+    NSString *string = @"Total Order : ";
     NSString * totalVal = [NSString stringWithFormat:@"%d",total];
     string = [string stringByAppendingString:totalVal];
     [label setText:string];
     label.textColor = [UIColor whiteColor];
+    
+    //s
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, atableView.frame.size.width, 12)];
+    [label1 setFont:[UIFont boldSystemFontOfSize:12]];
+    label1.textAlignment = NSTextAlignmentCenter;
+    NSString *string1 = @"(15% Tax Added)";
+    [label1 setText:string1];
+    label1.textColor = [UIColor whiteColor];
+    //e
     [view addSubview:label];
+    [view addSubview:label1];
+    
     [view setBackgroundColor:[UIColor colorWithRed:0.502 green:0.702 blue:0.114 alpha:1]];
     return view;
 }
@@ -174,14 +186,14 @@ int count = 0;
     NSLog(@"Fetch Object %@", [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"]);
     NSMutableString *prodId = [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"];
     
-    NSString *str=@"http://localhost/food/all_dishes.php?id=";
+    NSString *str=[NSString stringWithFormat:@"%@%@",Base_Url,All_Dishes];
         str = [str stringByAppendingString:prodId];
         NSURL *url=[NSURL URLWithString:str];
         NSData *myNSData=[NSData dataWithContentsOfURL:url];
    
         allItemss = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
    
-            NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
+            NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Name];
             picName = [picName stringByAppendingString:[[allItemss objectAtIndex:0] objectForKey:@"picture"]];
     cell.ImageOrderMenu.layer.cornerRadius = 0.0;
     cell.ImageOrderMenu.layer.masksToBounds = YES;
@@ -190,9 +202,14 @@ int count = 0;
             
             cell.LableOrderMenu.text = [[allItemss objectAtIndex:0] objectForKey:@"NAME"];
             cell.lablePriceOrderMenu.text = [[allItemss objectAtIndex:0] objectForKey:@"price"];
-    //quantity
-    //s
+    //
+    NSString *taxrate=[NSString stringWithFormat:@"%@%@",Base_Url,taxApply];
+    NSURL *gettax=[NSURL URLWithString:taxrate];
+    NSData *totaltax=[NSData dataWithContentsOfURL:gettax];
     
+    tax = [NSJSONSerialization JSONObjectWithData:totaltax options:kNilOptions error:&error];
+    NSString *collectTax = [[tax objectAtIndex:0] valueForKey:@"tax_rate"];
+    NSInteger totalTax = [collectTax integerValue];
     
     for (NSManagedObject *info in fetchedObjects) {
         NSLog(@"Here Dish ID = %@",[info valueForKey:@"dishid"]);
@@ -204,13 +221,21 @@ int count = 0;
             cell.lableQuantity.text = sub;
             NSInteger q = [sub integerValue];
             NSString *a = [[allItemss objectAtIndex:0] objectForKey:@"price"];
+            NSString *discount = [[allItemss objectAtIndex:0] objectForKey:@"discount"];
+            NSInteger disc = [discount integerValue];
+            //discount
             NSInteger b = [a integerValue];
+            b = b - disc;
             b = b * q;
-            total = total + b;
+            int taxSum = b/100;
+            taxSum = taxSum*totalTax;
+            //total = total + taxSum;
+            total = total + b + taxSum;
         }
         
         
     }
+    
     if (![context save:&error]) {
         NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
     }
@@ -357,7 +382,7 @@ int count = 0;
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         NSLog(@"Got udid from appdelegate = %@",appDelegate.passUdid);
-        NSString *new_order = [NSString stringWithFormat: @"http://localhost/food/submit_new_order.php?id=NULL&customer_id=%@&table_id=%@&order_datetime=%@&customer_instruction=Normal&estimated_time_min=30-45&actual_time=40&created_on=%@&updated_on=NULL&STATUS=new", appDelegate.passUdid,selectedTable,dateStr,dateStr];
+        NSString *new_order = [NSString stringWithFormat: @"%@/food/submit_new_order.php?id=NULL&customer_id=%@&table_id=%@&order_datetime=%@&customer_instruction=Normal&estimated_time_min=30-45&actual_time=40&created_on=%@&updated_on=NULL&STATUS=new", Base_Url,appDelegate.passUdid,selectedTable,dateStr,dateStr];
         NSString* urlTextEscaped = [new_order stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSURL *url=[NSURL URLWithString:urlTextEscaped];
         NSData *myNSData=[NSData dataWithContentsOfURL:url];
@@ -385,7 +410,7 @@ int count = 0;
 #pragma Get Order ID from Order_Main
                 
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                NSString *ordrMain=@"http://localhost/food/get_order_id.php?id=";
+                NSString *ordrMain=[NSString stringWithFormat:@"%@%@",Base_Url,Order_Id];
                 ordrMain = [ordrMain stringByAppendingString:appDelegate.passUdid];
                 NSURL *urls=[NSURL URLWithString:ordrMain];
                 NSData *myNSData=[NSData dataWithContentsOfURL:urls];
@@ -393,7 +418,7 @@ int count = 0;
                 allItemss = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
                 NSDictionary *results = [NSJSONSerialization JSONObjectWithData:myNSData options:NSJSONReadingMutableContainers error:nil];
                 NSString *get_order_id = [[allItemss objectAtIndex:0] objectForKey:@"id"];
-                NSString *new_order_detail = [NSString stringWithFormat: @"http://localhost/food/order_detail.php?order_id=%@&dish_id=%@&quantity=%@&created_on=%@&updated_on=%@", get_order_id,pDishID,pDishQuantity,dateStr,dateStr];
+                NSString *new_order_detail = [NSString stringWithFormat: @"%@/food/order_detail.php?order_id=%@&dish_id=%@&quantity=%@&created_on=%@&updated_on=%@",Base_Url, get_order_id,pDishID,pDishQuantity,dateStr,dateStr];
                 NSString* urlTextEscaped = [new_order_detail stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 NSURL *url=[NSURL URLWithString:urlTextEscaped];
                 NSData *myNSDatas=[NSData dataWithContentsOfURL:url];

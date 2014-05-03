@@ -12,6 +12,7 @@
 		BE0EB9E418EC742900D4E56B /* sclock.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0EB9E218EC742900D4E56B /* sclock.png */; };
 		BE0EB9E518EC742900D4E56B /* uclock.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0EB9E318EC742900D4E56B /* uclock.png */; };
 		BE0EF76718FD98F6004C19B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0EF76618FD98F5004C19B2 /* QuartzCore.framework */; };
+		BE366D6919145AFA00525797 /* ConnectionUrls.m in Sources */ = {isa = PBXBuildFile; fileRef = BE366D6819145AFA00525797 /* ConnectionUrls.m */; };
 		BE51D7711905DF28004ED276 /* TQStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE51D7701905DF28004ED276 /* TQStarRatingView.m */; };
 		BE51D77B1905DFE2004ED276 /* FeedBack.m in Sources */ = {isa = PBXBuildFile; fileRef = BE51D7791905DFE2004ED276 /* FeedBack.m */; };
 		BE51D77C1905DFE2004ED276 /* FeedBack.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE51D77A1905DFE2004ED276 /* FeedBack.xib */; };
@@ -144,6 +145,8 @@
 		BE0EB9E218EC742900D4E56B /* sclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sclock.png; sourceTree = "<group>"; };
 		BE0EB9E318EC742900D4E56B /* uclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uclock.png; sourceTree = "<group>"; };
 		BE0EF76618FD98F5004C19B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BE366D6719145AFA00525797 /* ConnectionUrls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionUrls.h; sourceTree = "<group>"; };
+		BE366D6819145AFA00525797 /* ConnectionUrls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionUrls.m; sourceTree = "<group>"; };
 		BE51D76F1905DF28004ED276 /* TQStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQStarRatingView.h; sourceTree = "<group>"; };
 		BE51D7701905DF28004ED276 /* TQStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQStarRatingView.m; sourceTree = "<group>"; };
 		BE51D7781905DFE2004ED276 /* FeedBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBack.h; sourceTree = "<group>"; };
@@ -318,6 +321,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE366D6619145ACC00525797 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BE366D6719145AFA00525797 /* ConnectionUrls.h */,
+				BE366D6819145AFA00525797 /* ConnectionUrls.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 		BE51D76E1905DEA9004ED276 /* TQStarRating */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,6 +595,7 @@
 		BEE14D8118EB438E0093678D /* Rest */ = {
 			isa = PBXGroup;
 			children = (
+				BE366D6619145ACC00525797 /* Network */,
 				BEF84BA818EB5D4900A8F958 /* Libraries */,
 				BEE14DAA18EB43FA0093678D /* Controller */,
 				BEE14D8A18EB438E0093678D /* AppDelegate.h */,
@@ -919,6 +932,7 @@
 				BE9305D318EB4AF4002FAB88 /* jsonViewController.m in Sources */,
 				BE51D77B1905DFE2004ED276 /* FeedBack.m in Sources */,
 				BE76E64E18ECC0C30064D6E2 /* MenuListCell.m in Sources */,
+				BE366D6919145AFA00525797 /* ConnectionUrls.m in Sources */,
 				BE98F53418EB4F7B0084AF7F /* Favourit.m in Sources */,
 				BE76E65B18ECC5BF0064D6E2 /* ItemListCell.m in Sources */,
 				BE9305B918EB47B7002FAB88 /* MHNibTableViewCell.m in Sources */,
@@ -1063,6 +1077,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/malikimran/Documents/Rest,
 					"$(inherited)",
@@ -1081,6 +1096,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/malikimran/Documents/Rest,
 					"$(inherited)",

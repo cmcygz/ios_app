@@ -15,6 +15,7 @@
 #import "MainViewController.h"
 #import "HGKOptionPanel.h"
 #import "jsonViewController.h"
+#import "ConnectionUrls.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface HotDishes ()
@@ -54,7 +55,7 @@
  
     
     
-    NSString *str=@"http://localhost/food/hot_dish.php";
+    NSString *str=[NSString stringWithFormat:@"%@%@",Base_Url,Hot_Dish];
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     if (myNSData == nil) {
@@ -113,7 +114,7 @@
     }
     
     
-    NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
+    NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Name];
     picName = [picName stringByAppendingString:[[allItems objectAtIndex:indexPath.row] objectForKey:@"picture"]];
     [cell.ImageHotDish setImageWithURL:[NSURL URLWithString:picName]
                    placeholderImage:[UIImage imageNamed:nil]];

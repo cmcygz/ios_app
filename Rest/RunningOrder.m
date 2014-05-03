@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "MyOrder.h"
 #import "OrderHistory.h"
+#import "ConnectionUrls.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 @interface RunningOrder ()
 
@@ -39,19 +40,19 @@ NSInteger *ind = 0;
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSString *str=[NSString stringWithFormat:@"http://localhost/food/section_header.php?cust_id=%@",appDelegate.passUdid];
+    NSString *str=[NSString stringWithFormat:@"http://krazyidea.com/food/section_header.php?cust_id=%@",appDelegate.passUdid];
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;
     allItems = [NSJSONSerialization JSONObjectWithData:myNSData options:kNilOptions error:&error];
     //
-    NSString *strs=[NSString stringWithFormat:@"http://localhost/food/number_of_records.php?cust_id=%@",appDelegate.passUdid];
+    NSString *strs=[NSString stringWithFormat:@"http://krazyidea.com/food/number_of_records.php?cust_id=%@",appDelegate.passUdid];
     NSURL *urls=[NSURL URLWithString:strs];
     NSData *myNSDatas=[NSData dataWithContentsOfURL:urls];
     total_rows = [NSJSONSerialization JSONObjectWithData:myNSDatas options:kNilOptions error:&error];
     
     //
-    NSString *strss=[NSString stringWithFormat:@"http://localhost/food/read_order_history.php?cust_id=%@",appDelegate.passUdid];
+    NSString *strss=[NSString stringWithFormat:@"http://krazyidea.com/food/read_order_history.php?cust_id=%@",appDelegate.passUdid];
     NSURL *urlss=[NSURL URLWithString:strss];
     NSData *myNSDatass=[NSData dataWithContentsOfURL:urlss];
     order_history = [NSJSONSerialization JSONObjectWithData:myNSDatass options:kNilOptions error:&error];
@@ -145,7 +146,7 @@ NSInteger *ind = 0;
 //    NSString *sectionTitle =[self tableView:tableView titleForHeaderInSection:sectionTitle];
     //if ([sectionTitle isEqualToString:a]) {
     NSError *error=nil;
-    NSString *get_ordr_id=[NSString stringWithFormat:@"http://localhost/food/order_id.php?order_id=%@",a];
+    NSString *get_ordr_id=[NSString stringWithFormat:@"%@/food/order_id.php?order_id=%@",Base_Url,a];
     NSURL *get_data=[NSURL URLWithString:get_ordr_id];
     NSData *fetch_data=[NSData dataWithContentsOfURL:get_data];
     order_id = [NSJSONSerialization JSONObjectWithData:fetch_data options:kNilOptions error:&error];
@@ -153,14 +154,14 @@ NSInteger *ind = 0;
     cell.lableTitle.text = [[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"];
     cell.lablePrice.text = [[order_id objectAtIndex:indexPath.row] objectForKey:@"quantity"];
     //dish_img
-    NSString *get_ordr_ids=[NSString stringWithFormat:@"http://localhost/food/get_dish_img.php?dish_id=%@",[[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"]];
+    NSString *get_ordr_ids=[NSString stringWithFormat:@"/food/get_dish_img.php?dish_id=%@",Base_Url,[[order_id objectAtIndex:indexPath.row] objectForKey:@"dish_id"]];
     NSURL *get_datas=[NSURL URLWithString:get_ordr_ids];
     NSData *fetch_cmpltData=[NSData dataWithContentsOfURL:get_datas];
     dish_img = [NSJSONSerialization JSONObjectWithData:fetch_cmpltData options:kNilOptions error:&error];
     
     NSString *img = [[dish_img objectAtIndex:0] objectForKey:@"picture"];
     
-    NSString *picName = [NSString stringWithFormat:@"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/%@",img ];
+    NSString *picName = [NSString stringWithFormat:@"%@/RestAutomationAdmin/uploads/dish/%@",Base_Url,img ];
     //picName = [picName stringByAppendingString:[[dish_img objectAtIndex:0] objectForKey:@"picture"]];
     [cell.ImageRunningOrder setImageWithURL:[NSURL URLWithString:picName]
                       placeholderImage:[UIImage imageNamed:nil]];

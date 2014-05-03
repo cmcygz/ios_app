@@ -1,5 +1,4 @@
-//
-//  MenuList.m
+
 //  Rest
 //
 //  Created by Malik Imran on 4/3/14.
@@ -18,6 +17,7 @@
 #import "ItemList.h"
 #import "MenuListCell.h"
 #import "jsonViewController.h"
+#import "ConnectionUrls.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface MenuList ()
@@ -49,7 +49,7 @@
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
     
     
-    NSString *str=@"http://localhost/food/categories.php";
+    NSString *str = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Categories];
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;
@@ -97,7 +97,7 @@
     // cell.lablePrice.text = [displayItems objectAtIndex:indexPath.row];
     // cell.ImageHotDish.image = [UIImage imageNamed:@"about.png"];
     
-    NSString *picName = @"file:///Users/malikimran/Desktop/Resturant/RestAutomationAdmin/uploads/category/";
+    NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Category_Image];
     picName = [picName stringByAppendingString:[[allItems objectAtIndex:indexPath.row] objectForKey:@"image"]];
     [cell.ImageHotDish setImageWithURL:[NSURL URLWithString:picName]
                       placeholderImage:[UIImage imageNamed:nil]];

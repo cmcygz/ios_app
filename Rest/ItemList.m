@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "HGKOptionPanel.h"
 #import "jsonViewController.h"
+#import "ConnectionUrls.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface ItemList ()
@@ -49,7 +50,7 @@
     allItems = [[NSMutableArray alloc] init];
     displayItems = [[NSMutableArray alloc] init];
     
-    NSString *str=@"http://localhost/food/plist.php?name=";
+    NSString *str=[NSString stringWithFormat:@"%@%@",Base_Url,plist];
     str = [str stringByAppendingString:title];
     NSString* urlTextEscaped = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
@@ -106,7 +107,7 @@
         cell = [nib objectAtIndex:0];
     }
     
-    NSString *picName = @"file:///Users/malikimran/Desktop/Resturant/RestAutomationAdmin/uploads/dish/";
+    NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Name];
     picName = [picName stringByAppendingString:[[allItems objectAtIndex:indexPath.row] objectForKey:@"picture"]];
     [cell.ImageHotDish setImageWithURL:[NSURL URLWithString:picName]
                       placeholderImage:[UIImage imageNamed:nil]];

@@ -9,6 +9,7 @@
 #import "OrderPage.h"
 #import "Home.h"
 #import "CSNotificationView.h"
+#import "ConnectionUrls.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 @interface OrderPage ()
 @property (strong) NSMutableArray *UDID;
@@ -48,8 +49,8 @@
     
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
-    NSString *str=@"http://localhost/food/singledish.php?id=";
+    NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Name];
+    NSString *str=[NSString stringWithFormat:@"%@%@",Base_Url,Single_Dish];
     str = [str stringByAppendingString:pid];
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
@@ -67,7 +68,7 @@
     [_imageDish setImageWithURL:[NSURL URLWithString:picName]placeholderImage:[UIImage imageNamed:nil]]; //sdwebimage library
     
     //asynchronously download image
-//    NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
+//    NSString *picName = @"http://krazyidea.com/RestAutomationAdmin/WebContent/uploads/dish/";
 //    picName = [picName stringByAppendingString:[results objectForKey:@"picture"]];
 //    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:picName]];
 //    _imageDish.image = [UIImage imageWithData:imageData];
@@ -159,7 +160,7 @@
     }
     else if (count > 0){
         [CSNotificationView showInViewController:self
-                                       tintColor:[UIColor greenColor]
+                                       tintColor:[UIColor redColor]
                                            image:[UIImage imageNamed:@"sucess"]
                                          message:@"Dish Already Added."
                                         duration:3.8f];

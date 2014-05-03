@@ -11,6 +11,7 @@
 #import "HotDishCell.h"
 #import "OrderPage.h"
 #import "MyOrderCell.h"
+#import "ConnectionUrls.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 @interface Favourit ()
 
@@ -97,7 +98,7 @@
     }
     else if ([selectedSegment selectedSegmentIndex] == 1){
         NSError *error=nil;
-        str=@"http://localhost/food/hot_dish.php";
+        str=[NSString stringWithFormat:@"%@%@",Base_Url,Hot_Dish];
         url=[NSURL URLWithString:str];
         myNSData=[NSData dataWithContentsOfURL:url];
         
@@ -129,9 +130,9 @@
                                        entityForName:@"Favourite" inManagedObjectContext:context];
         [fetchRequest setEntity:entity];
         NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-        NSLog(@"Fetch Object %@", [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"]);
+        //NSLog(@"Fetch Object %@", [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"]);
         NSMutableString *prodId = [[fetchedObjects objectAtIndex:indexPath.row] valueForKey:@"dishid"];
-        str=@"http://localhost/food/all_dishes.php?id=";
+        str=[NSString stringWithFormat:@"%@%@",Base_Url,All_Dishes];
         str = [str stringByAppendingString:prodId];
         url=[NSURL URLWithString:str];
         myNSData=[NSData dataWithContentsOfURL:url];
@@ -141,7 +142,7 @@
         NSString *times = [[allItemss objectAtIndex:0] objectForKey:@"average_cooking_time_min"];
         [collectIds addObject:ids];
         [collectTime addObject:times];
-        NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
+        NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Name];
         picName = [picName stringByAppendingString:[[allItemss objectAtIndex:0] objectForKey:@"picture"]];
         [cell.ImageHotDish setImageWithURL:[NSURL URLWithString:picName]
                           placeholderImage:[UIImage imageNamed:nil]];
@@ -154,7 +155,7 @@
     else
         if ([selectedSegment selectedSegmentIndex] == 1) {
             
-            str=@"http://localhost/food/hot_dish.php";
+            str=[NSString stringWithFormat:@"%@%@",Base_Url,Hot_Dish];
             url=[NSURL URLWithString:str];
             myNSData=[NSData dataWithContentsOfURL:url];
             NSError *error=nil;
@@ -163,7 +164,7 @@
             NSString *times = [[allItemss objectAtIndex:indexPath.row] objectForKey:@"average_cooking_time_min"];
             [collectIds addObject:ids];
             [collectTime addObject:times];
-            NSString *picName = @"file:///Users/malikimran/Desktop/RestAutomationAdmin/WebContent/uploads/dish/";
+            NSString *picName = [NSString stringWithFormat:@"%@%@",Base_Url,Dish_Name];
             picName = [picName stringByAppendingString:[[allItemss objectAtIndex:indexPath.row] objectForKey:@"picture"]];
             [cell.ImageHotDish setImageWithURL:[NSURL URLWithString:picName]
                               placeholderImage:[UIImage imageNamed:nil]];
@@ -294,7 +295,7 @@
     allItems = [[NSArray alloc] initWithObjects:@"one",nil];
     displayItems = [[NSMutableArray alloc] initWithArray:allItems];
            
-           NSString *str=@"http://localhost/food/hot_dish.php";
+           NSString *str=Hot_Dish;
            NSURL *url=[NSURL URLWithString:str];
            NSData *myNSData=[NSData dataWithContentsOfURL:url];
            [tableView reloadData];

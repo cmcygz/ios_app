@@ -11,6 +11,7 @@
 #import "CSNotificationView.h"
 #import "FeedBackHistory.h"
 #import "Home.h"
+#import "ConnectionUrls.h"
 @interface FeedBack ()
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, strong) CSNotificationView* permanentNotification;
@@ -30,7 +31,7 @@
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
-    [dateFormatter1 setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [dateFormatter1 dateFromString:dateStr];
     NSLog(@"date : %@",date);
     
@@ -44,7 +45,7 @@
     NSDate *destinationDate = [[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:date];
     
     NSDateFormatter *dateFormatters = [[NSDateFormatter alloc] init];
-    [dateFormatters setDateFormat:@"dd-MMM-yyyy hh:mm"];
+    [dateFormatters setDateFormat:@"dd-MMM-yyyy"];
     [dateFormatters setDateStyle:NSDateFormatterShortStyle];
     [dateFormatters setTimeStyle:NSDateFormatterShortStyle];
     [dateFormatters setDoesRelativeDateFormatting:YES];
@@ -87,7 +88,7 @@
     [self.starRatingView setScore:fCost withAnimation:YES];
     [_comment_area resignFirstResponder];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSString *ordrMain=[NSString stringWithFormat:@"http://localhost/food/feedback.php?cust_id=%@&remark=%@&rating=%@&date=%@",appDelegate.passUdid,_comment_area.text,cmnt,dateStr];
+    NSString *ordrMain=[NSString stringWithFormat:@"%@/food/feedback.php?cust_id=%@&remark=%@&rating=%@&date=%@",Base_Url,appDelegate.passUdid,cmnt,newRating,dateStr];
     NSString* urlTextEscaped = [ordrMain stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *urls=[NSURL URLWithString:urlTextEscaped];
     NSData *myNSData=[NSData dataWithContentsOfURL:urls];

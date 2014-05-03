@@ -10,6 +10,7 @@
 #import "HistoryCell.h"
 #import "CSNotificationView.h"
 #import "FeedBack.h"
+#import "ConnectionUrls.h"
 #import "Home.h"
 @interface FeedBackHistory ()
 
@@ -33,7 +34,7 @@
     [back addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [home addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     allItems = [[NSArray alloc] init];
-    NSString *str=@"http://localhost/food/read_feedback.php";
+    NSString *str=[NSString stringWithFormat:@"%@%@",Base_Url,Feedback];
     NSURL *url=[NSURL URLWithString:str];
     NSData *myNSData=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;

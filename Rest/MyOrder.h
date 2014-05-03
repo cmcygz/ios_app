@@ -19,6 +19,7 @@
     //NSInteger *total;
     NSArray *allItems;
     NSArray *allItemss;
+    NSArray *tax;
     NSMutableString *proIDs;
     NSMutableArray *collectIds;
     NSMutableArray *displayItems;

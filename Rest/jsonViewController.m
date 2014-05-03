@@ -7,7 +7,7 @@
 //
 
 #import "jsonViewController.h"
-
+#import "ConnectionUrls.h"
 @interface jsonViewController ()
 
 @end
@@ -30,7 +30,7 @@
 }
 
 - (IBAction)getDataFromJson:(id)sender {
-    NSString *str=@"http://localhost/food/hot_dish.php";
+    NSString *str=Hot_Dish;
     NSURL *url=[NSURL URLWithString:str];
     NSData *data=[NSData dataWithContentsOfURL:url];
     NSError *error=nil;
